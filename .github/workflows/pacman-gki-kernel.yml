@@ -254,7 +254,7 @@ jobs:
           wget -O- https://github.com/vc-teahouse/Baseband-guard/raw/main/setup.sh | bash
           
           echo "启用 Baseband-guard 内核配置..."
-          CONFIG_FILE="arch/arm64/configs/gki_defconfig"
+          CONFIG_FILE="arch/arm64/configs/mgk_64_k515_defconfig"
           echo "CONFIG_BBG=y" >> "$CONFIG_FILE"
           
           # 对于 GitHub Actions 云编译，修改 LSM Kconfig
@@ -402,7 +402,7 @@ jobs:
           set -x
           set -e
           echo "写入LZ4KD&ZSTDN config依赖"
-          CONFIG_FILE="$CONFIG/kernel-5.15/arch/arm64/configs/gki_defconfig"
+          CONFIG_FILE="$CONFIG/kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig"
 
           if [ "${{ inputs.kernel_version }}" = "5.10" ]; then
             echo "CONFIG_ZSMALLOC=y" >> "$CONFIG_FILE"
@@ -448,7 +448,7 @@ jobs:
       - name: 设置BBR为默认拥塞算法
         if: ${{ inputs.set_defbbr }}
         run: |
-          CONFIG_FILE="$CONFIG/kernel-5.15/arch/arm64/configs/gki_defconfig"
+          CONFIG_FILE="$CONFIG/kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig"
           echo "Changing to configuration directory: $CONFIG_FILE..."
           echo "CONFIG_DEFAULT_BBR=y" >> "$CONFIG_FILE"
            
@@ -456,57 +456,57 @@ jobs:
         run: |
           echo "更改为配置目录: $CONFIG..."
           cd "$CONFIG"
-          echo "Adding configuration settings to gki_defconfig..."
+          echo "Adding configuration settings to mgk_64_k515_defconfig..."
 
           # Add KSU configuration settings
-          echo "CONFIG_KSU=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
 
           if [ "${{ inputs.kernelsu_variant }}" == "Next" ]; then
-            echo "CONFIG_KSU_KPROBES_HOOK=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-            echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_KSU_KPROBES_HOOK=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+            echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           elif [ "${{ inputs.kernelsu_variant }}" == "SukiSU" ]; then
-            echo "CONFIG_KPM=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-            echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_KPM=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+            echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           elif [ "${{ inputs.kernelsu_variant }}" == "MKSU" ]; then
-            echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+            echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           fi
           
           # Add additional tmpfs config setting
-          echo "CONFIG_TMPFS_XATTR=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TMPFS_POSIX_ACL=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TMPFS_XATTR=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_TMPFS_POSIX_ACL=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
 
           # Add additional config setting
-          echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IP6_NF_TARGET_HL=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_IP6_NF_TARGET_HL=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
 
           # Add BBR Config
-          echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_BBR=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_NET_SCH_FQ=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_BIC=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_WESTWOOD=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_HTCP=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_TCP_CONG_BBR=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_NET_SCH_FQ=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_TCP_CONG_BIC=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_TCP_CONG_WESTWOOD=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_TCP_CONG_HTCP=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
 
           # Add SUSFS configuration settings
-          echo "CONFIG_KSU_SUSFS=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SUS_MAP=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_MAP=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           if [ "${{ inputs.kernel_version }}" != "6.6" ]; then
-          echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           else
-          echo "CONFIG_KSU_SUSFS_SUS_PATH=n" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_PATH=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           fi
-          echo "CONFIG_KSU_SUSFS_SUS_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SUS_KSTAT=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./kernel-5.15/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_KSTAT=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+          echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           
           # Remove check_defconfig
           sed -i 's/check_defconfig//' ./kernel-5.15/build.config.gki
@@ -543,9 +543,9 @@ jobs:
             sed -i '/^[[:space:]]*"protected_exports_list"[[:space:]]*:[[:space:]]*"android\/abi_gki_protected_exports_aarch64",$/d' ./kernel-5.15/BUILD.bazel
             rm -rf ./kernel-5.15/android/abi_gki_protected_exports_*
             sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" ./build/kernel/kleaf/impl/stamp.bzl
-            # sed -E -i '/^CONFIG_LOCALVERSION=/ s/(.*)"$/\1"/' ./kernel-5.15/arch/arm64/configs/gki_defconfig
+            # sed -E -i '/^CONFIG_LOCALVERSION=/ s/(.*)"$/\1"/' ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
             if [ ! -z ${{ inputs.version }} ]; then
-              sed -i '/^CONFIG_LOCALVERSION=/ s/="\([^"]*\)"/="${{ inputs.version }}"/' ./kernel-5.15/arch/arm64/configs/gki_defconfig
+              sed -i '/^CONFIG_LOCALVERSION=/ s/="\([^"]*\)"/="${{ inputs.version }}"/' ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
             fi
           fi
 
