@@ -16,7 +16,7 @@ on:
           - Next
           - MKSU
           - SukiSU
-        default: SukiSU
+        default: Official
       kernelsu_branch:
         description: "选择 ksu 分支"
         required: true
