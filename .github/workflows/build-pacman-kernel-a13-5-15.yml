@@ -29,7 +29,7 @@ on:
       version:
         description: '自定义版本名(如5.15.167后面的字符/留空则使用默认版本号)'
         required: false
-        default: "5yenneko"
+        default: "-5yenneko"
         type: string
       use_zram:
         description: '是否开启增加更多ZRAM算法?'
