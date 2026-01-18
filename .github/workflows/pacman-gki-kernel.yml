@@ -465,6 +465,10 @@ jobs:
             echo "CONFIG_KSU_KPROBES_HOOK=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
             echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           elif [ "${{ inputs.kernelsu_variant }}" == "SukiSU" ]; then
+            echo "CONFIG_KPROBES=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+            echo "CONFIG_HAVE_KPROBES=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+            echo "CONFIG_KPROBE_EVENTS=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
+            echo "CONFIG_KSU_KPROBES_HOOK=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
             echo "CONFIG_KPM=y" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
             echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./kernel-5.15/arch/arm64/configs/mgk_64_k515_defconfig
           elif [ "${{ inputs.kernelsu_variant }}" == "MKSU" ]; then
