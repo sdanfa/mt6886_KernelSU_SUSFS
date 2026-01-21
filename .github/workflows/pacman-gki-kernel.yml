@@ -273,8 +273,8 @@ jobs:
 
           # Copy SUSFS patches
           cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch ./kernel-5.15/
-          #cp ../susfs4ksu/kernel_patches/fs/* ./kernel-5.15/fs/
-          #cp ../susfs4ksu/kernel_patches/include/linux/* ./kernel-5.15/include/linux/
+          cp ../susfs4ksu/kernel_patches/fs/* ./kernel-5.15/fs/
+          cp ../susfs4ksu/kernel_patches/include/linux/* ./kernel-5.15/include/linux/
 
           if [ "${{ inputs.kernelsu_variant }}" == "Official" ]; then
             echo "Applying SUSFS patches for Official KernelSU..."
