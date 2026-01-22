@@ -264,57 +264,57 @@ jobs:
           
           echo "Baseband-guard 配置完成"
           #
-#      - name: 为 KernelSU 变体安装 SUSFS 补丁
-#        run: |
-#          echo "更改为配置目录: $CONFIG..."
-#          cd "$CONFIG"
-#
-#          echo "Applying SUSFS patches..."
-#
-#          # Copy SUSFS patches
-#          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch ./kernel-5.15/
-#          cp ../susfs4ksu/kernel_patches/fs/* ./kernel-5.15/fs/
-#          cp ../susfs4ksu/kernel_patches/include/linux/* ./kernel-5.15/include/linux/
-#
-#          if [ "${{ inputs.kernelsu_variant }}" == "Official" ]; then
-#            echo "Applying SUSFS patches for Official KernelSU..."
-#            cd ./kernel-5.15/KernelSU
-#            cp ../../../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./
-#            patch -p1 --forward --fuzz=3 < 10_enable_susfs_for_ksu.patch
-#          elif [ "${{ inputs.kernelsu_variant }}" == "Next" ]; then
-#             cd ./kernel-5.15/KernelSU-Next
-#            sed -i '/bool ksu_devpts_hook = false;/d' ./kernel/sucompat.c
-#          elif [ "${{ inputs.kernelsu_variant }}" == "MKSU" ]; then
-#            echo "Applying SUSFS patches for MKSU..."
-#             cd ./kernel-5.15/KernelSU
-#            cp ../../../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./
-#            patch -p1 --forward --fuzz=3 < 10_enable_susfs_for_ksu.patch || true
-#
-#            echo "Applying MKSU specific SUSFS patch..."
-#            cp ../../../kernel_patches/mksu/mksu_susfs.patch ./
-#            patch -p1 < mksu_susfs.patch || true
-#            cp ../../../kernel_patches/mksu/fix.patch ./
-#            patch -p1 < fix.patch || true
-#          elif [ "${{ inputs.kernelsu_variant }}" == "SukiSU" ]; then
-#            echo "Applying SUSFS patches for SukiSU..."
-#             cd ./kernel-5.15/KernelSU
-#            echo "Applying SukiSU specific SUSFS patch..."
-#          else
-#            echo "Invalid KernelSU variant selected!"
-#            exit 1
-#          fi
-#
-#          cd ..
-#          FORMATTED_BRANCH="${{ inputs.android_version }}-${{ inputs.kernel_version }}"
-#          if grep -q deprecated <<< "$REMOTE_BRANCH" && \
-#             { [ "$FORMATTED_BRANCH" == "android12-5.10" ] && \
-#               [ ${{ inputs.sub_level }} -lt 136 ]; }; then
-#            patch -p1 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
-#            curl -LSs https://github.com/zzh20188/GKI_KernelSU_SUSFS/raw/refs/heads/legacy/fdinfo.c.patch -o fdinfo.c.patch
-#            patch -p1 < fdinfo.c.patch
-#          else
-#            patch -p1 --fuzz=3 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
-#          fi
+      - name: 为 KernelSU 变体安装 SUSFS 补丁
+        run: |
+          echo "更改为配置目录: $CONFIG..."
+          cd "$CONFIG"
+
+          echo "Applying SUSFS patches..."
+
+          # Copy SUSFS patches
+          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch ./kernel-5.15/
+          cp ../susfs4ksu/kernel_patches/fs/* ./kernel-5.15/fs/
+          cp ../susfs4ksu/kernel_patches/include/linux/* ./kernel-5.15/include/linux/
+
+          if [ "${{ inputs.kernelsu_variant }}" == "Official" ]; then
+            echo "Applying SUSFS patches for Official KernelSU..."
+            cd ./kernel-5.15/KernelSU
+            cp ../../../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./
+            patch -p1 --forward --fuzz=3 < 10_enable_susfs_for_ksu.patch
+          elif [ "${{ inputs.kernelsu_variant }}" == "Next" ]; then
+             cd ./kernel-5.15/KernelSU-Next
+            sed -i '/bool ksu_devpts_hook = false;/d' ./kernel/sucompat.c
+          elif [ "${{ inputs.kernelsu_variant }}" == "MKSU" ]; then
+            echo "Applying SUSFS patches for MKSU..."
+             cd ./kernel-5.15/KernelSU
+            cp ../../../susfs4ksu/kernel_patches/KernelSU/10_enable_susfs_for_ksu.patch ./
+            patch -p1 --forward --fuzz=3 < 10_enable_susfs_for_ksu.patch || true
+
+            echo "Applying MKSU specific SUSFS patch..."
+            cp ../../../kernel_patches/mksu/mksu_susfs.patch ./
+            patch -p1 < mksu_susfs.patch || true
+            cp ../../../kernel_patches/mksu/fix.patch ./
+            patch -p1 < fix.patch || true
+          elif [ "${{ inputs.kernelsu_variant }}" == "SukiSU" ]; then
+            echo "Applying SUSFS patches for SukiSU..."
+             cd ./kernel-5.15/KernelSU
+            echo "Applying SukiSU specific SUSFS patch..."
+          else
+            echo "Invalid KernelSU variant selected!"
+            exit 1
+          fi
+
+          cd ..
+          FORMATTED_BRANCH="${{ inputs.android_version }}-${{ inputs.kernel_version }}"
+          if grep -q deprecated <<< "$REMOTE_BRANCH" && \
+             { [ "$FORMATTED_BRANCH" == "android12-5.10" ] && \
+               [ ${{ inputs.sub_level }} -lt 136 ]; }; then
+            patch -p1 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
+            curl -LSs https://github.com/zzh20188/GKI_KernelSU_SUSFS/raw/refs/heads/legacy/fdinfo.c.patch -o fdinfo.c.patch
+            patch -p1 < fdinfo.c.patch
+          else
+            patch -p1 --fuzz=3 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
+          fi
 
       #- name: 添加 HymoFS
       #  run: |
