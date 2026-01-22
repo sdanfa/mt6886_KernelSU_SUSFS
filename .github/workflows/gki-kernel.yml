@@ -282,7 +282,7 @@ jobs:
           
           echo "Baseband-guard 配置完成"
           
-     - name: 为 KernelSU 变体安装 SUSFS 补丁
+      - name: 为 KernelSU 变体安装 SUSFS 补丁
         run: |
           echo "更改为配置目录: $CONFIG..."
           cd "$CONFIG"
@@ -343,7 +343,7 @@ jobs:
           else
             patch -p1 --fuzz=3 < 50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch || true
           fi
-  
+          
       #- name: 添加 HymoFS
       #  run: |
       #    echo "更改为配置目录: $CONFIG..."
