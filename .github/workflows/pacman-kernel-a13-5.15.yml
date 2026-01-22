@@ -76,7 +76,7 @@ jobs:
           # - sub_level: "X"
           #  os_patch_level: "lts"
           - sub_level: "180"
-            os_patch_level: "2025-12"
+            os_patch_level: "2025-05"
     uses: ./.github/workflows/pacman-gki-kernel.yml
     secrets: inherit
     with:
